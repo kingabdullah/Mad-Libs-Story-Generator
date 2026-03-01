@@ -1,1 +1,12 @@
-print("Hello, World!")
+print()
+print("=" * 64)
+print("            WELCOME TO THE MAD LIBS STORY GENERATOR")
+print("=" * 64)
+print()
+print("How to play:")
+print("You will be asked for words like nouns, verbs, and adjectives.")
+print("Your answers will be used to build a funny custom story.")
+print()
+print("Let's get started!")
+print()
+
