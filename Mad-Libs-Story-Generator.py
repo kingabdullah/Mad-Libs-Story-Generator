@@ -1,70 +1,8 @@
 import random
 
-
-# Dictionary to match word types
-#introduction function to welcome the user and explain the game
-def show_welcome():    
-    print()
-    print("=" * 64)
-    print("            WELCOME TO THE MAD LIBS STORY GENERATOR")
-    print("=" * 64)
-    print()
-    print("How to play:")
-    print("You will be asked for words like nouns, verbs, and adjectives.")
-    print("Your answers will be used to build a funny custom story.")
-    print()
-    print("Let's get started!")
-    print("^" * 64)
-    print()
-    
-#function to collect user input
-def collect_user_input():
-    noun = input("Enter a singular noun (like: dragon, teacher, car): ")
-    verb = input("Enter a verb in base form (like: run, fight, jump): ")
-    adjective = input("Enter an adjective (like: big, scary, funny): ")
-    adverb = input("Enter an adverb (usually ends in -ly, like: quickly, loudly): ")
-    place = input("Enter a place (like: Paris, school, Mars): ").title()
-    name = input("Enter a name (like: Alex, Maria): ").title()
-    return {
-    "noun": noun,
-    "verb": verb,
-    "adjective": adjective,
-    "adverb": adverb,
-    "place": place,
-    "name": name
-    } 
-
-
-
-#list of words for random story generation
-import random
-nouns = ["dragon", "robot", "pirate", "penguin", "wizard"]
-verbs = ["explode", "dance", "teleport", "whisper", "juggle"]
-adjectives = ["crazy", "sparkly", "gigantic", "mysterious", "sleepy"]
-adverbs = ["wildly", "gracefully", "awkwardly", "dramatically", "silently"]
-places = ["Paris", "Tokyo", "Mars", "New York", "Atlantis"]
-names = ["Oliver", "Zara", "Max", "Luna", "Theo"]
-
-def generate_random_story():
-    return {
-    "noun": random.choice(nouns),
-    "verb": random.choice(verbs),
-    "adjective": random.choice(adjectives),
-    "adverb": random.choice(adverbs),
-    "place": random.choice(places),
-    "name": random.choice(names)
-     }
-
-
-#funciton to build the story
-def build_story(choice, words):
-    noun = words["noun"]
-    verb = words["verb"]
-    adjective = words["adjective"]
-    adverb = words["adverb"]
-    place = words["place"]
-    name = words["name"]
-
+# ==============================================================
+# Word Bank Dictionary
+# ==============================================================
 
 word_bank = {
     "noun": ["dragon", "robot", "pirate", "penguin", "wizard"],
@@ -75,9 +13,9 @@ word_bank = {
     "name": ["Oliver", "Zara", "Max", "Luna", "Theo"]
 }
 
-
-# Story templates dictionary
-
+# ==============================================================
+# Story Templates
+# ==============================================================
 
 stories = {
     "1": """
@@ -125,27 +63,17 @@ And no one ever saw {name} the same way again.
 """
 }
 
-
-# Welcome Function
-
+# ==============================================================
+# Functions
+# ==============================================================
 
 def show_welcome():
-    print()
-    print("=" * 64)
+    print("\n" + "=" * 64)
     print("            WELCOME TO THE MAD LIBS STORY GENERATOR")
     print("=" * 64)
-    print()
-    print("How to play:")
-    print("You will be asked for words like nouns, verbs, and adjectives.")
-    print("Your answers will be used to build a funny custom story.")
-    print()
-    print("Let's get started!")
-    print("^" * 64)
-    print()
-
-
-
-# Collect User Input
+    print("\nHow to play:")
+    print("Enter words or choose random mode to generate a story.")
+    print("^" * 64 + "\n")
 
 
 def collect_user_input():
@@ -155,11 +83,8 @@ def collect_user_input():
     adverb = input("Enter an adverb (ends in -ly): ")
     place = input("Enter a place: ").title()
     name = input("Enter a name: ").title()
-
     return noun, verb, adjective, adverb, place, name
 
-
-# Generate Random Words Using Dictionary
 
 def generate_random_story():
     return (
@@ -172,14 +97,7 @@ def generate_random_story():
     )
 
 
-
-# Build Story Using Story Dictionary
-
 def build_story(choice, noun, verb, adjective, adverb, place, name):
-
-    if choice not in stories:
-        return "Invalid choice."
-
     return stories[choice].format(
         noun=noun,
         verb=verb,
@@ -189,15 +107,11 @@ def build_story(choice, noun, verb, adjective, adverb, place, name):
         name=name
     )
 
-
 # ==============================================================
-# Main Program Loop
+# Main Program
 # ==============================================================
 
-play_again = "yes"
-
-while play_again in ["yes", "y"]:
-
+while True:
     show_welcome()
 
     print("Choose a story type:")
@@ -206,7 +120,7 @@ while play_again in ["yes", "y"]:
     print("3. Spooky")
 
     choice = input("Enter 1, 2, or 3: ")
-    while choice not in ["1", "2", "3"]:
+    while choice not in stories:
         choice = input("Please enter 1, 2, or 3: ")
 
     print("\nChoose mode:")
@@ -218,19 +132,18 @@ while play_again in ["yes", "y"]:
         mode = input("Please enter 1 or 2: ")
 
     if mode == "1":
-        noun, verb, adjective, adverb, place, name = collect_user_input()
+        words = collect_user_input()
     else:
-        noun, verb, adjective, adverb, place, name = generate_random_story()
+        words = generate_random_story()
         print("\nRandom words selected!")
 
     print("\nHere is your Mad Libs story:")
-    story = build_story(choice, noun, verb, adjective, adverb, place, name)
-    print(story)
+    print(build_story(choice, *words))
 
-    play_again = input("Do you want to play again? (yes/no): ").lower()
-    while play_again not in ["yes", "no", "y", "n"]:
-        play_again = input("Please enter 'yes' or 'no': ").lower()
+    again = input("Play again? (yes/no): ").lower()
+    if again not in ["yes", "y"]:
+        break
 
     print("\n" + "=" * 70 + "\n")
 
-print("Thanks for playing the Mad Libs Story Generator! Goodbye!")
+print("Thanks for playing! Goodbye!")
