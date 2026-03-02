@@ -2,6 +2,68 @@ import random
 
 
 # Dictionary to match word types
+#introduction function to welcome the user and explain the game
+def show_welcome():    
+    print()
+    print("=" * 64)
+    print("            WELCOME TO THE MAD LIBS STORY GENERATOR")
+    print("=" * 64)
+    print()
+    print("How to play:")
+    print("You will be asked for words like nouns, verbs, and adjectives.")
+    print("Your answers will be used to build a funny custom story.")
+    print()
+    print("Let's get started!")
+    print("^" * 64)
+    print()
+    
+#function to collect user input
+def collect_user_input():
+    noun = input("Enter a singular noun (like: dragon, teacher, car): ")
+    verb = input("Enter a verb in base form (like: run, fight, jump): ")
+    adjective = input("Enter an adjective (like: big, scary, funny): ")
+    adverb = input("Enter an adverb (usually ends in -ly, like: quickly, loudly): ")
+    place = input("Enter a place (like: Paris, school, Mars): ").title()
+    name = input("Enter a name (like: Alex, Maria): ").title()
+    return {
+    "noun": noun,
+    "verb": verb,
+    "adjective": adjective,
+    "adverb": adverb,
+    "place": place,
+    "name": name
+    } 
+
+
+
+#list of words for random story generation
+import random
+nouns = ["dragon", "robot", "pirate", "penguin", "wizard"]
+verbs = ["explode", "dance", "teleport", "whisper", "juggle"]
+adjectives = ["crazy", "sparkly", "gigantic", "mysterious", "sleepy"]
+adverbs = ["wildly", "gracefully", "awkwardly", "dramatically", "silently"]
+places = ["Paris", "Tokyo", "Mars", "New York", "Atlantis"]
+names = ["Oliver", "Zara", "Max", "Luna", "Theo"]
+
+def generate_random_story():
+    return {
+    "noun": random.choice(nouns),
+    "verb": random.choice(verbs),
+    "adjective": random.choice(adjectives),
+    "adverb": random.choice(adverbs),
+    "place": random.choice(places),
+    "name": random.choice(names)
+     }
+
+
+#funciton to build the story
+def build_story(choice, words):
+    noun = words["noun"]
+    verb = words["verb"]
+    adjective = words["adjective"]
+    adverb = words["adverb"]
+    place = words["place"]
+    name = words["name"]
 
 
 word_bank = {
