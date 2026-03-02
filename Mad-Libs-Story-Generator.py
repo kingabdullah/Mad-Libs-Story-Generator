@@ -21,7 +21,14 @@ def collect_user_input():
     adverb = input("Enter an adverb (usually ends in -ly, like: quickly, loudly): ")
     place = input("Enter a place (like: Paris, school, Mars): ").title()
     name = input("Enter a name (like: Alex, Maria): ").title()
-    return noun, verb, adjective, adverb, place, name
+    return {
+    "noun": noun,
+    "verb": verb,
+    "adjective": adjective,
+    "adverb": adverb,
+    "place": place,
+    "name": name
+    } 
 
 
 
@@ -35,18 +42,24 @@ places = ["Paris", "Tokyo", "Mars", "New York", "Atlantis"]
 names = ["Oliver", "Zara", "Max", "Luna", "Theo"]
 
 def generate_random_story():
-    return(
-    random.choice(nouns),
-    random.choice(verbs),
-    random.choice(adjectives),
-    random.choice(adverbs),
-    random.choice(places),
-    random.choice(names)
-    )
+    return {
+    "noun": random.choice(nouns),
+    "verb": random.choice(verbs),
+    "adjective": random.choice(adjectives),
+    "adverb": random.choice(adverbs),
+    "place": random.choice(places),
+    "name": random.choice(names)
+     }
 
 
 #funciton to build the story
-def build_story(choice, noun, verb, adjective, adverb, place, name):
+def build_story(choice, words):
+    noun = words["noun"]
+    verb = words["verb"]
+    adjective = words["adjective"]
+    adverb = words["adverb"]
+    place = words["place"]
+    name = words["name"]
 
     if choice == "1":
         story = f"""
