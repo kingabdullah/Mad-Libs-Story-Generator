@@ -1,9 +1,6 @@
 import random
 
-# ==============================================================
-# Word Bank Dictionary
-# ==============================================================
-
+# Word bank for random mode
 word_bank = {
     "noun": ["dragon", "robot", "pirate", "penguin", "wizard"],
     "verb": ["explode", "dance", "teleport", "whisper", "juggle"],
@@ -13,137 +10,189 @@ word_bank = {
     "name": ["Oliver", "Zara", "Max", "Luna", "Theo"]
 }
 
-# ==============================================================
-# Story Templates
-# ==============================================================
+# Definitions + examples
+definitions = {
+    "noun": "A noun is a person, place, or thing. Example: dog, school, car.",
+    "verb": "A verb is an action word. Example: run, jump, eat.",
+    "adjective": "An adjective describes a noun. Example: big, funny, scary.",
+    "adverb": "An adverb describes a verb (usually ends in -ly). Example: quickly, slowly.",
+    "place": "Enter a place. Example: New York, beach, school.",
+    "name": "Enter a person's name. Example: John, Sarah."
+}
 
+# Story templates
 stories = {
     "1": """
-------------------------------------------------
- Adventure Story
-------------------------------------------------
-In the magical land of {place}, a {adjective} {noun} named {name}
-decided to {verb} {adverb}.
+============================================================
+                        EPIC ADVENTURE
+============================================================
 
-Suddenly, the ground started shaking!
-But {name} bravely continued to {verb} and saved the day.
+In the powerful kingdom of {place}, there lived a {adjective} {noun}
+named {name}.
 
-The people of {place} will never forget the heroic {noun}.
-------------------------------------------------
+One day, {name} discovered a mysterious message that said:
+"You must {verb} {adverb} to save everything."
+
+Without hesitation, {name} accepted the challenge.
+
+Mountains trembled.
+Storms filled the sky.
+Enemies appeared from nowhere.
+
+But with bravery and determination, {name} continued to {verb}
+until peace finally returned to {place}.
+
+From that day on, songs were written about the legendary {noun}
+named {name}.
 """,
 
     "2": """
-------------------------------------------------
- Funny Story
-------------------------------------------------
-One morning in {place}, a {adjective} {noun} named {name}
-started to {verb} {adverb} in the middle of the street.
+============================================================
+                            FUNNY STORY
+============================================================
 
-Everyone stared.
-Someone screamed.
-A pigeon fainted.
+Everything was normal in {place}...
 
-By sunset, {name} was trending everywhere.
-------------------------------------------------
+Until a {adjective} {noun} named {name}
+suddenly started to {verb} {adverb}
+right in the middle of town.
+
+At first, people were confused.
+Then someone started laughing.
+Then everyone started laughing.
+
+Soon, a crowd formed.
+Someone began recording.
+A news reporter showed up.
+
+By sunset, {name} was officially known as
+"That {adjective} {noun} Who Loves to {verb}."
+
+And honestly, nobody could stop talking about it.
 """,
 
     "3": """
-------------------------------------------------
- Spooky Story
-------------------------------------------------
-Late at night in {place}, a {adjective} {noun} named {name}
-began to {verb} {adverb} under the full moon.
+============================================================
+                            SCARY STORY
+============================================================
 
-A cold wind blew.
-Strange whispers echoed.
-Something was watching...
+It was past midnight in {place}.
 
-And no one ever saw {name} the same way again.
-------------------------------------------------
+A {adjective} {noun} named {name}
+slowly began to {verb} {adverb}
+in the darkness.
+
+The streetlights flickered.
+A cold wind whispered through the air.
+Footsteps echoed... but no one was there.
+
+{name} suddenly stopped.
+
+Something was standing behind them.
+
+Breathing.
+
+Waiting.
+
+And whatever it was...
+it was not human.
 """
 }
 
-# ==============================================================
-# Functions
-# ==============================================================
-
-def show_welcome():
-    print("\n" + "=" * 64)
-    print("            WELCOME TO THE MAD LIBS STORY GENERATOR")
-    print("=" * 64)
-    print("\nHow to play:")
-    print("Enter words or choose random mode to generate a story.")
-    print("^" * 64 + "\n")
+# Print instructions once
+print("\n" + "=" * 60)
+print("            MAD LIBS STORY GENERATOR")
+print("=" * 60)
+print("\nInstructions:")
+print("- Choose a story type (Epic, Funny, or Scary).")
+print("- Enter your own words or choose random mode.")
+print("- If you are unsure, examples will be shown.")
+print("- You can play again after the story ends.\n")
 
 
+# Collect user words (with examples)
 def collect_user_input():
-    noun = input("Enter a singular noun: ")
-    verb = input("Enter a verb (base form): ")
-    adjective = input("Enter an adjective: ")
-    adverb = input("Enter an adverb (ends in -ly): ")
-    place = input("Enter a place: ").title()
-    name = input("Enter a name: ").title()
-    return noun, verb, adjective, adverb, place, name
+    words = {}
+    word_types = ["noun", "verb", "adjective", "adverb", "place", "name"]
+
+    print("\nEnter your words below:\n")
+
+    for word in word_types:
+        print(definitions[word])  # shows definition + example
+        user_input = input(f"Enter a {word}: ").strip()
+
+        while user_input == "":
+            user_input = input(f"You must enter a {word}: ").strip()
+
+        if word in ["place", "name"]:
+            user_input = user_input.title()
+
+        words[word] = user_input
+        print()  # small space for readability
+
+    return words
 
 
-def generate_random_story():
-    return (
-        random.choice(word_bank["noun"]),
-        random.choice(word_bank["verb"]),
-        random.choice(word_bank["adjective"]),
-        random.choice(word_bank["adverb"]),
-        random.choice(word_bank["place"]),
-        random.choice(word_bank["name"])
-    )
+# Random mode
+def generate_random_words():
+    words = {}
+    for category in word_bank:
+        words[category] = random.choice(word_bank[category])
+    return words
 
 
-def build_story(choice, noun, verb, adjective, adverb, place, name):
+# Build story
+def build_story(choice, words):
     return stories[choice].format(
-        noun=noun,
-        verb=verb,
-        adjective=adjective,
-        adverb=adverb,
-        place=place,
-        name=name
+        noun=words["noun"],
+        verb=words["verb"],
+        adjective=words["adjective"],
+        adverb=words["adverb"],
+        place=words["place"],
+        name=words["name"]
     )
 
-# ==============================================================
-# Main Program
-# ==============================================================
+#========================================
+# Main game loop
+#========================================
 
 while True:
-    show_welcome()
 
-    print("Choose a story type:")
-    print("1. Adventure")
+    print("\nChoose a Story Type:")
+    print("1. Epic Adventure")
     print("2. Funny")
-    print("3. Spooky")
+    print("3. Scary")
 
     choice = input("Enter 1, 2, or 3: ")
+
     while choice not in stories:
         choice = input("Please enter 1, 2, or 3: ")
 
-    print("\nChoose mode:")
+    print("\nChoose Mode:")
     print("1. Enter your own words")
     print("2. Random words")
 
     mode = input("Enter 1 or 2: ")
+
     while mode not in ["1", "2"]:
         mode = input("Please enter 1 or 2: ")
 
     if mode == "1":
         words = collect_user_input()
     else:
-        words = generate_random_story()
-        print("\nRandom words selected!")
+        words = generate_random_words()
+        print("\nRandom words selected.\n")
 
-    print("\nHere is your Mad Libs story:")
-    print(build_story(choice, *words))
+    final_story = build_story(choice, words)
 
-    again = input("Play again? (yes/no): ").lower()
-    if again not in ["yes", "y"]:
+    
+    print(final_story)
+
+    again = input("\nWould you like to play again? (yes/no): ").lower()
+
+    while again not in ["yes", "y", "no", "n"]:
+        again = input("Please enter yes or no: ").lower()
+
+    if again in ["no", "n"]:
+        print("\nThanks for playing. Goodbye!")
         break
-
-    print("\n" + "=" * 70 + "\n")
-
-print("Thanks for playing! Goodbye!")
